@@ -7,11 +7,13 @@ This will require some method for ad hoc ensemble.  Perhaps one works on weather
 
 Work on each classifier in parallel until it is determined that a classifier is complete, or should be abandoned or sgoudl be combined with another classifier, etc., then re-allocate staff.
 
-#### pseudopseudocode
+
+### pseudopseudocode
 
 Put all data into a dataframe or dataframes  
  * Clean it, join it, etc.  
  * Make sure this is ultimately embodied in a function, so we can conveniently put the test data through the same pipeline
+ * import libraries
   
 *EDA* 
  * Get basic stats, whatever you like  
@@ -40,3 +42,10 @@ Put all data into a dataframe or dataframes
  * Output predictions for test data into CSV  
 
 
+### Style Guide
+
+DF Column names in CamelCase
+variable names in snake_case
+function names in snake_case
+Docstrings for all functions unless they're basically trivial
+Classifiers should not refer to global variables
