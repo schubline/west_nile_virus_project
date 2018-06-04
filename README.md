@@ -2,9 +2,9 @@
 Group 2's project 4
 
 ## Authors
-Jon Withers - TL
-Schubert Laforest - DS
-James Truslow - LA
+Jon Withers - TL  
+Schubert Laforest - DS  
+James Truslow - LA  
 
 ## Problem
 
