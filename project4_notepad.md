@@ -10,7 +10,7 @@ Work on each classifier in parallel until it is determined that a classifier is 
 
 ### pseudopseudocode
 
-Put all data into a dataframe or dataframes  
+*Put all data into a dataframe or dataframes*
  * Clean it, join it, etc.  
  * Make sure this is ultimately embodied in a function, so we can conveniently put the test data through the same pipeline
  * import libraries
