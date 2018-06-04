@@ -9,34 +9,34 @@ Work on each classifier in parallel until it is determined that a classifier is 
 
 #### pseudopseudocode
 
-Put all data into a dataframe or dataframes
-  Clean it, join it, etc.
-  Make sure this is ultimately embodied in a function, so we can conveniently put the test data through the same pipeline
+Put all data into a dataframe or dataframes  
+ * Clean it, join it, etc.  
+ * Make sure this is ultimately embodied in a function, so we can conveniently put the test data through the same pipeline
   
-EDA
-  Get basic stats, whatever you like
-  Build a baseline model and run it
+*EDA* 
+ * Get basic stats, whatever you like  
+ * Build a baseline model and run it
 
-Build trap classifier
-  Uses train.csv
-  Should have a method to give equivalent of 'predict_proba' on any observation in test set
-  idealy, this will be a single function
+*Build trap classifier*  
+ * Uses train.csv  
+ * Should have a method to give equivalent of 'predict_proba' on any observation in test set  
+ * idealy, this will be a single function  
 
-Build weather classifier
-   Uses weather.csv
-   Should have a method to give equivalent of 'predict_proba' on  any observation in test set
-   idealy, this will be a single function
+*Build weather classifier*
+ * Uses weather.csv
+ * Should have a method to give equivalent of 'predict_proba' on  any observation in test set
+ * idealy, this will be a single function
 
-Build spray classifier
-   Uses spray.csv
-   Should have a method to give equivalent of 'predict_proba' on  any observation in test set
-   idealy, this will be a single function
+*Build spray classifier* 
+ * Uses spray.csv  
+ * Should have a method to give equivalent of 'predict_proba' on  any observation in test set  
+ * idealy, this will be a single function  
 
-Build the ensemble classifier
-  Somehow synthesize the predictions
-  ideally, this will be a single function
+*Build the ensemble classifier*
+ * Somehow synthesize the predictions  
+ * ideally, this will be a single function  
 
-Posprocessing
-  Output predictions for test data into CSV
+*Posprocessing*
+ * Output predictions for test data into CSV  
 
 
