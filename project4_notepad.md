@@ -44,8 +44,8 @@ Work on each classifier in parallel until it is determined that a classifier is 
 
 ### Style Guide
 
-DF Column names in CamelCase
-variable names in snake_case
-function names in snake_case
-Docstrings for all functions unless they're basically trivial
-Classifiers should not refer to global variables
+ * DF Column names in CamelCase
+ * variable names in snake_case
+ * function names in snake_case
+ * Docstrings for all functions unless they're basically trivial
+ * Classifiers should not refer to global variables
