@@ -7,7 +7,7 @@
 
 ### GitHub Repo
  * Create a GitHub repository for the group. Each member should be added as a contributor.  (DONE)
- * Retrieve the dataset and upload it into a directory named assets.  (need to change name)
+ * Retrieve the dataset and upload it into a directory named assets.  (DONE, but may want a cleaner dir structure)
  * Generate a .py or .ipynb file that imports the available data.  (JW)
 
 ### Project Planning
