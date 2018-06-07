@@ -7,7 +7,7 @@
 
 ### GitHub Repo
  * Create a GitHub repository for the group. Each member should be added as a contributor.  (DONE)
- * Retrieve the dataset and upload it into a directory named assets.  (need to change name)
+ * Retrieve the dataset and upload it into a directory named assets.  (DONE, but may want a cleaner dir structure)
  * Generate a .py or .ipynb file that imports the available data.  (JW)
 
 ### Project Planning
@@ -31,6 +31,6 @@
 ### Presentation
  * Audience: You are presenting to members of the CDC. Some members of the audience will be biostatisticians and epidemiologists who will understand your models and metrics and will want more information. Others will be decision-makers, focusing almost exclusively on your cost-benefit analysis. Your job is to convince both groups of the best course of action in the same meeting and be able to answer questions that either group may ask.
  * The length of your presentation should be about 20 minutes (a rough guideline: 2 minute intro, 10 minutes on model, 5 minutes on cost-benefit analysis, 3 minute recommendations/conclusion). Touch base with your local instructor... er, manager... for specific logistic requirements!
-   * Intro + conclusions (WHO WANTS THIS?)
-   * Modeling (WHO WANTS THIS?)
-   * Cost-benefit (WHO WANTS THIS?)
+   * Intro + conclusions (*JW*) **These items seem to correspond to other roles. JW**
+   * Modeling (*JT*)
+   * Cost-benefit (*SL*)
