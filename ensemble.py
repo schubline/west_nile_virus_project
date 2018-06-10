@@ -185,19 +185,16 @@ def CV_test_rig_3rfc(X,y):
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-
-"""
-Test rig for GridSearch on ensemble classifier, built w/ breast-cancer
-data
-"""
-
-from sklearn.datasets import load_breast_cancer
-data = load_breast_cancer()
-y = data.target
-X = data.data
-
-gscv = CV_test_rig_3rfc(X,y)
-
-cv_results_df = pd.DataFrame(gscv.cv_results_)
-gscv.best_score_
-gscv.best_params_
+def test_rig_wrapper():
+    """
+    Test rig for GridSearch on ensemble classifier, built w/ breast-cancer
+    data
+    """
+    
+    from sklearn.datasets import load_breast_cancer
+    data = load_breast_cancer()
+    y = data.target
+    X = data.data
+    
+    gscv = CV_test_rig_3rfc(X,y)
+    return gscv
