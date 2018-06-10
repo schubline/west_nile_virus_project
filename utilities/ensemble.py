@@ -59,7 +59,8 @@ def ensemble_two_models(X, y, model_list):
     
     # put together the parameter list for different weights
     # for the VotingClassifier
-    w1 = np.linspace(0,1,11)
+    grid_size = 21
+    w1 = np.linspace(0,1,grid_size)
     w2 = 1 - w1
     w_array = [[w_one, w_two] for w_one, w_two in zip(w1,w2)]
 
@@ -108,7 +109,7 @@ def ensemble_three_models(X, y, model_list):
     
     # put together the parameter list for different weights
     # for the VotingClassifier
-    grid_size = 4
+    grid_size = 21
     w_array = []
     for i in np.linspace(0,1,grid_size):
         for j in np.linspace(0,1,grid_size):
