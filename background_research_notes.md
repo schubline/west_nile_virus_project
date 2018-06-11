@@ -3,9 +3,17 @@
 
 [CDC Website page on West Nile Virus](https://www.cdc.gov/westnile/prevention/index.html)
 (Lots of info here on prevention, sumary statistics and maps for visualization)
+
+
 [WHO WNV Fact SHeet](http://www.who.int/news-room/fact-sheets/detail/west-nile-virus)
+
+
 [Illinois Department of Public Health Surveillance](http://www.dph.illinois.gov/topics-services/diseases-and-conditions/west-nile-virus/surveillance)
+
+
 [Chicago GIS](https://www.cityofchicago.org/dam/city/depts/doit/general/GIS/Misc/GISSummary.pdf)
+
+
 
 ## The Situation: West Nile Virus History
  - West Mile Virus (WNV) is a mosquito-borne zoonotic arbovirus
