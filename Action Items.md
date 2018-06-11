@@ -41,5 +41,5 @@
    * Intro + conclusions (JW)
    * Modeling (JT)
    * Cost-benefit (SL)
- * Outline for presentation segments due to editor Thu afternoon
- * Editor finalizes presentation Thu. night. (???)
+ * Outline for presentation segments due to editor Thu afternoon (everyone)
+ * Editor finalizes presentation Thu. night. (JW)
