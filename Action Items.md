@@ -26,7 +26,7 @@
    * Individual notebooks (SL; JT; JW)
    * Ensemble notebook (JT)
  * Conduct a cost-benefit analysis. This should include annual cost projections for various levels of pesticide coverage (cost) and the effect of these various levels of pesticide coverage (benefit). (Hint: How would we quantify the benefit of pesticide spraying? To get "maximum benefit," what does that look like and how much does that cost? What if we cover less and therefore get a lower level of benefit?)
-   * Get cost of disease per patient (JT)
+   * Get cost of disease per patient (JT -- DONE.  It's approx 25k$ per hospitalization)
    * Get municipal cost of spraying (SL)
  * Your final submission CSV should be in your GitHub repo. (JT)
 
