@@ -28,7 +28,11 @@
  * Conduct a cost-benefit analysis. This should include annual cost projections for various levels of pesticide coverage (cost) and the effect of these various levels of pesticide coverage (benefit). (Hint: How would we quantify the benefit of pesticide spraying? To get "maximum benefit," what does that look like and how much does that cost? What if we cover less and therefore get a lower level of benefit?)
    * Get cost of disease per patient (JT -- DONE.  It's approx 25k$ per hospitalization)
    * Get municipal cost of spraying (SL)
+   * Just see if neighborhoods that got sprayed had lower (WNV * num_mosquitoes) afterward (JT)
  * Your final submission CSV should be in your GitHub repo. (JT)
+ * Finalize code for cleaned predictor matrix by Tuesday morning (JW?)
+ * Everybody test their models by Wed. morning (Sl, JT, JW)
+ * Run ensemble code by Thursday morning (JT)
 
 ### Presentation
  * Audience: You are presenting to members of the CDC. Some members of the audience will be biostatisticians and epidemiologists who will understand your models and metrics and will want more information. Others will be decision-makers, focusing almost exclusively on your cost-benefit analysis. Your job is to convince both groups of the best course of action in the same meeting and be able to answer questions that either group may ask.
