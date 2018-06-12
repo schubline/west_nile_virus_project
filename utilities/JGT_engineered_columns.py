@@ -68,7 +68,7 @@ def timelagged_temperature(df, obs_date, lag_days_LB=7, lag_days_UB=0):
     Date_LB = Date_obs - time_lag_LB
     Date_UB = Date_obs - time_lag_UB
     
-    window_Tmean = df[(df.dtDate >= Date_LB) & (df.dtDate <= Date_UB)].Tavg.mean()
+    window_Tmean = df[(df.dtDate >= Date_LB) & (df.dtDate <= Date_UB)].avg_Tavg.mean()
     
     return window_Tmean
 
@@ -103,7 +103,7 @@ def timelagged_precipitation(df, obs_date, lag_days_LB=70, lag_days_UB=0):
     Date_LB = Date_obs - time_lag_LB
     Date_UB = Date_obs - time_lag_UB
     
-    window_Pmean = df[(df.dtDate >= Date_LB) & (df.dtDate <= Date_UB)].PrecipTotal.mean()
+    window_Pmean = df[(df.dtDate >= Date_LB) & (df.dtDate <= Date_UB)].avg_PrecipTotal.mean()
     
     return window_Pmean
 
@@ -138,7 +138,7 @@ def timelagged_windspeed(df, obs_date, lag_days_LB=21, lag_days_UB=0):
     Date_LB = Date_obs - time_lag_LB
     Date_UB = Date_obs - time_lag_UB
     
-    window_Vmean = df[(df.dtDate >= Date_LB) & (df.dtDate <= Date_UB)].AvgSpeed.mean()
+    window_Vmean = df[(df.dtDate >= Date_LB) & (df.dtDate <= Date_UB)].avg_AvgSpeed.mean()
     
     return window_Vmean
 
@@ -149,7 +149,30 @@ def make_timelagged_windspeed_col(df):
     return new_df
 
 
-def add_five_Truslow_cols(df):
+def make_avg_weather_columns(df):
+    """ Calculates average meterological data on a given date.  Average of both 
+    weather stations
+    
+    Parameters
+    ----------
+    df: dataframe with weather info.  I hope there is date info as datetime objects
+    
+    
+    Returns
+    -------
+    new_df: copy of 'df' with new columns added
+    
+    """
+    
+    new_df = df.copy()
+    new_df['avg_Tavg'] = new_df.groupby('Date').Tavg.mean()
+    new_df['avg_PrecipTotal'] = new_df.groupby('Date').PrecipTotal.mean()
+    new_df['avg_AvgSpeed'] = new_df.groupby('Date').AvgSpeed.mean()
+    return new_df
+    
+    
+
+def add_six_Truslow_cols(df):
     """Calls a sequence of functions to add five engineered-feature columns to a dataframe.
     Input dataframe must include the original columns from the 'weather.csv' dataset, or
     at least a cleaned version with the same column titles, and with all numeric data.
@@ -165,6 +188,8 @@ def add_five_Truslow_cols(df):
     
     new_df = make_datetimeobject_col(df)
     
+    new_df = make_avg_weather_columns(new_df):
+        
     new_df = make_timelagged_daylight_col(new_df)
     
     new_df = make_timelagged_temperature_col(new_df)
