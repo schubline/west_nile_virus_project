@@ -46,7 +46,13 @@ def dummy_neighborhood(df):
     # assert df["neighborhood"].isnull().sum() == 0
 
     ## make dummies from the Species_modfied column
-    df = pd.get_dummies(df, columns = ['neighborhood'], drop_first = True)
+    flag = False
+    if len(df['neighborhood'].unique()) == 65:
+        flag = True
+    df = pd.get_dummies(df, columns = ['neighborhood'])
+    if flag:
+        df['neighborhood_Hermosa'] = 0
+        df['neighborhood_West Pullman'] = 0
 
     return df
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -302,7 +308,30 @@ def make_timelagged_windspeed_col(df):
     return new_df
 
 
-def add_five_Truslow_cols(df):
+def make_avg_weather_columns(df):
+    """ Calculates average meterological data on a given date.  Average of both
+    weather stations
+
+    Parameters
+    ----------
+    df: dataframe with weather info.  I hope there is date info as datetime objects
+
+
+    Returns
+    -------
+    new_df: copy of 'df' with new columns added
+
+    """
+
+    new_df = df.copy()
+    new_df['avg_Tavg'] = new_df.groupby('Date').Tavg.mean()
+    new_df['avg_PrecipTotal'] = new_df.groupby('Date').PrecipTotal.mean()
+    new_df['avg_AvgSpeed'] = new_df.groupby('Date').AvgSpeed.mean()
+    return new_df
+
+
+
+def add_six_Truslow_cols(df):
     """Calls a sequence of functions to add five engineered-feature columns to a dataframe.
     Input dataframe must include the original columns from the 'weather.csv' dataset, or
     at least a cleaned version with the same column titles, and with all numeric data.
@@ -316,6 +345,8 @@ def add_five_Truslow_cols(df):
     """
 
     new_df = make_datetimeobject_col(df)
+
+    new_df = make_avg_weather_columns(new_df):
 
     new_df = make_timelagged_daylight_col(new_df)
 
@@ -222695,7 +222726,12 @@ def make_neighborhood_column(df):
     return df
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-def master_clean(df, parkdf, nbhood = True):
+def master_clean(df, parkdf, weatherdf, nbhood = True):
+    """
+    Combines functions to make neighborhood column (optional), dummy species,
+    dummy neighborhood, make score column, add columns for time-delayed weather,
+    and fix the column names
+    """
     ## Don't bother adding the neighborhood column if it's already there
     if nbhood == False:
         df = make_neighborhood_column(df)
@@ -222706,10 +222742,12 @@ def master_clean(df, parkdf, nbhood = True):
 
     df = make_score_column(df, parkdf)
 
-    # df = add_five_Truslow_cols(df)
+    df = add_six_Truslow_cols(weatherdf)
 
     df = fix_column_names(df)
+
     print(list(df.columns))
+
     return df
 
 
@@ -222717,8 +222755,11 @@ def master_clean(df, parkdf, nbhood = True):
 
 train = pd.read_csv('../assets/train_with_neighborhoods.csv', index_col = 0)
 test = pd.read_csv('../assets/test_with_neighborhoods.csv', index_col = 0)
+park = pd.read_csv('../modified_parks.csv', index_col = 0)
+weather = pd.read_csv('../assets/input/weather.csv')
+
 train_mini = train.head(100)
 test_mini = test.head(100)
-park = pd.read_csv('../modified_parks.csv')
-master_clean(train_mini, park).to_csv('attempt_master_clean_train.csv', index = False)
-master_clean(test_mini, park).to_csv('attempt_master_clean_test.csv', index = False)
+
+master_clean(train_mini, park, weather).to_csv('attempt_master_clean_train.csv', index = False)
+master_clean(test_mini, park, weather).to_csv('attempt_master_clean_test.csv', index = False)
