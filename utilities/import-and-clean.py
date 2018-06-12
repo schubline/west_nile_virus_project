@@ -7,25 +7,30 @@ Created on Monday June 11, 2018
 ## Dummies for neighborhood, species (pip-rest, pip, rest, other)
 ## Neighborhood maker
 ## park distance (1/r)
-#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+import numpy as np
+import pandas as pd
+import datetime as dt
+
 def dummy_species(df):
     """
     Converts the "Species" column of a dataset to dummies.
     Since there are only three options for species that matter,
     it first transforms the column and then creates the dummies."""
-## Imports: pandas for dataframe manipulation
+    ## Imports: pandas for dataframe manipulation
     import pandas as pd
 
-## Make sure everything is good
+    ## Make sure everything is good
     assert df["Species"].isnull().sum() == 0
 
-## map the column
+    ## map the column
     df['Species'] = df['Species'].map(lambda x: "OTHER" if ((x != 'CULEX PIPIENS/RESTUANS') & (x != 'CULEX RESTUANS') & (x != 'CULEX PIPIENS')) else x)
 
-## make dummies from the Species_modfied column
-    df = pd.get_dummies(df, columns = 'Species')
+    ## make dummies from the Species_modfied column
+    df = pd.get_dummies(df, columns = ['Species'])
 
-## drop the 'other' column
+    ## drop the 'other' column
     df.drop(labels = ['Species_OTHER'],  axis = 1, inplace=True)
 
     return df
@@ -34,14 +39,14 @@ def dummy_neighborhood(df):
     """
     Converts the "neighborhood" column of a dataset to dummies.
     Drops the first one. This produces a very wide dataset."""
-## Imports: pandas for dataframe manipulation
+    ## Imports: pandas for dataframe manipulation
     import pandas as pd
 
-## Make sure everything is good
-    assert df["neighborhood"].isnull().sum() == 0
+    ## Make sure everything is good
+    # assert df["neighborhood"].isnull().sum() == 0
 
-## make dummies from the Species_modfied column
-    df = pd.get_dummies(df, columns = 'neighborhood', drop_first = True)
+    ## make dummies from the Species_modfied column
+    df = pd.get_dummies(df, columns = ['neighborhood'], drop_first = True)
 
     return df
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -71,7 +76,83 @@ def point_inside_polygon(x,y,poly):
 
     return inside
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-# def add_park_distance_score():
+def lat_lon_ds(p_1, p_2):
+    """Argument 'p1' is a list of decimal [lat, lon] coords in degrees. 'p2' is another list.
+    Function returns the distance between them in meters, without correction for curvature of the earth.
+    Distance will be slightly underestimated by a fraction approximately (t - sin(t)), where t is the angular separation
+    between the two points in radians.  For 1 degree of latitude, the relative error is < 1e-6."""
+
+    import numpy as np
+
+    # http://frederic.chambat.free.fr/geophy/inertie_pepi01/article.pdf
+    # Equitorial radius, eqn. 15
+    R_earth = 6378137  # meters
+
+    # Distance btw O'Hare and Wrigley field is 20879.8 meters, along a great circle
+    # coords are [41.94885800000001, 87.65774809999999], [41.9741625, 87.9073214]
+    # According to http://edwilliams.org/gccalc.htm
+    # This gives a Chicago-area correction factor of (20879.8/20849.9),
+    # where the denominator is calculated using uncorrected R_earth.
+
+    R = R_earth*(20879.8/20849.9)
+
+    theta_1 = (90 - p_1[0])*(2*np.pi/360)
+    phi_1 = p_1[1]*(2*np.pi/360)
+    theta_2 = (90 - p_2[0])*(2*np.pi/360)
+    phi_2 = p_2[1]*(2*np.pi/360)
+
+    def x(r,phi,theta):
+        return r*np.sin(theta)*np.cos(phi)
+
+    def y(r,phi,theta):
+        return r*np.sin(theta)*np.sin(phi)
+
+    def z(r,phi,theta):
+        return r*np.cos(theta)
+
+    # Calculate euclidean distance
+    delta_s= np.sqrt(
+        (x(R, phi_1, theta_1) - x(R, phi_2, theta_2))**2 + \
+        (y(R, phi_1, theta_1) - y(R, phi_2, theta_2))**2 + \
+        (z(R, phi_1, theta_1) - z(R, phi_2, theta_2))**2 \
+    )
+
+    return delta_s
+
+def modify_parks_csv(parks_csv = '../Parks_-_Locations__deprecated_November_2016_.csv'):
+    parks_df = pd.read_csv(parks_csv)
+
+    parks_df = parks_df[['ACRES', 'LOCATION']]
+
+    parks_df.drop(labels = [0,1,2,3], axis = 0, inplace=True)
+
+    pat1 = "\((\d{2}\.\d{2,})"
+    pat2 = ", (-\d{2}\.\d{2,})"
+    parks_df['lat'] = parks_df.LOCATION.str.extract(pat1)
+    parks_df['lon'] = parks_df.LOCATION.str.extract(pat2)
+    parks_df.drop(labels= ['LOCATION'], axis = 1, inplace=True)
+    parks_df.to_csv("modified_parks.csv")
+
+def score(entry_lat, entry_lon, area_col, lat_col, lon_col):
+    score = 0
+    for lat, lon, area in zip(lat_col, lon_col, area_col):
+        score += area / lat_lon_ds((entry_lat,entry_lon), (lat,lon))
+        # print(score)
+    return score
+
+def make_score_column(df, park_df):
+    lat_col = park_df['lat'].astype(float)
+    lon_col = park_df['lon'].astype(float)
+    area_col = park_df['ACRES'].astype(float)
+
+    entry_lat_col = df['Latitude']
+    entry_lon_col = df['Longitude']
+    score_column = []
+    for entry_lat, entry_lon in zip(entry_lat_col, entry_lon_col):
+        score_column.append(score(entry_lat, entry_lon, area_col, lat_col, lon_col))
+
+    df['park_score'] = score_column
+    return df
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 def make_datetimeobject_col(df):
@@ -249,7 +330,7 @@ def add_five_Truslow_cols(df):
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 def fix_column_names(df):
     """Returns the dataframe with column names in snake_case"""
-    df.columns = df.columns.str.strip().str.lower().str.replace(' ', '_')
+    df.columns = df.columns.str.strip().str.lower().str.replace(' ', '_').str.replace('/','_')
     return df
 
 def make_datetimeobject_col(df):
@@ -222613,18 +222694,31 @@ def make_neighborhood_column(df):
     df['neighborhood'] = neighborhood_col
     return df
 
-#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-def master_clean(df, nbhood = True):
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+def master_clean(df, parkdf, nbhood = True):
+    ## Don't bother adding the neighborhood column if it's already there
+    if nbhood == False:
+        df = make_neighborhood_column(df)
+
     df = dummy_species(df)
 
     df = dummy_neighborhood(df)
 
-    df = add_five_Truslow_cols(df)
+    df = make_score_column(df, parkdf)
 
-## Don't bother adding the neighborhood column if it's already there
-    if nbhood = False:
-        df = make_neighborhood_column(df)
+    # df = add_five_Truslow_cols(df)
 
     df = fix_column_names(df)
-
+    print(list(df.columns))
     return df
+
+
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+train = pd.read_csv('../assets/train_with_neighborhoods.csv', index_col = 0)
+test = pd.read_csv('../assets/test_with_neighborhoods.csv', index_col = 0)
+train_mini = train.head(100)
+test_mini = test.head(100)
+park = pd.read_csv('../modified_parks.csv')
+master_clean(train_mini, park).to_csv('attempt_master_clean_train.csv', index = False)
+master_clean(test_mini, park).to_csv('attempt_master_clean_test.csv', index = False)
