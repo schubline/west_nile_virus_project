@@ -222892,20 +222892,25 @@ def master_clean(df, parkdf, weatherdf, nbhood = True):
 
     df = dummy_species(df)
 
-    df = dummy_neighborhood(df)
+    df = add_neighborhood_infection_column(df)
+
+    df = pd.get_dummies(df, columns = ['neighborhood_infection_category'])
+
+    ## We're assuming that the binned neighborhoods will be better
+    # df = dummy_neighborhood(df)
+
+
 
     df = make_score_column(df, parkdf)
 
     weatherdf = add_six_Truslow_cols(weatherdf)
 
     print("####################")
-    print(weatherdf.columns)
+    print(df.columns)
 
     weather_to_join = weatherdf[['dtDate','Daylight','avg_Tavg', 'avg_PrecipTotal', 'avg_AvgSpeed', 'TimeLaggedDaylight', 'TimeLaggedTemperature','TimeLaggedPrecipitation','TimeLaggedWindspeed' ]]
 
     df = pd.merge(df, weather_to_join, how = 'left', on = 'dtDate', sort = False)
-
-    df = add_neighborhood_infection_column(df)
 
     df = fix_column_names(df)
 
@@ -222921,11 +222926,11 @@ test = pd.read_csv('../assets/test_with_neighborhoods.csv', index_col = 0)
 park = pd.read_csv('../modified_parks.csv', index_col = 0)
 weather = pd.read_csv('../assets/input/weather.csv')
 
-# train_mini = train.head(100)
-# test_mini = test.head(100)
-#
-# master_clean(train_mini, park, weather).to_csv('mini_master_clean_train.csv', index = False)
-# master_clean(test_mini, park, weather).to_csv('mini_master_clean_test.csv', index = False)
+train_mini = train.head(100)
+test_mini = test.head(100)
 
-master_clean(train, park, weather).to_csv('../assets/master_clean_train.csv', index = False)
-master_clean(test, park, weather).to_csv('../assets/master_clean_test.csv', index = False)
+master_clean(train_mini, park, weather).to_csv('mini_master_clean_train.csv', index = False)
+master_clean(test_mini, park, weather).to_csv('mini_master_clean_test.csv', index = False)
+
+# master_clean(train, park, weather).to_csv('../assets/master_clean_train.csv', index = False)
+# master_clean(test, park, weather).to_csv('../assets/master_clean_test.csv', index = False)
