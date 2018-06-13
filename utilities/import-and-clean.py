@@ -222805,6 +222805,78 @@ def make_neighborhood_column(df):
     df['neighborhood'] = neighborhood_col
     return df
 
+def add_neighborhood_infection_column(df):
+    """takes a dataframe with a neighborhood column and a WnvPresent column and adds a column"""
+    d = {"O'Hare": 'high',
+     'South Deering': 'high',
+     'Dunning': 'high',
+     'Fringe': 'high',
+     'Norwood Park': 'high',
+     'New City': 'medium',
+     'Calumet Heights': 'medium',
+     'Humboldt Park': 'medium',
+     'Sauganash,Forest Glen': 'medium',
+     'Portage Park': 'medium',
+     'Edison Park': 'medium',
+     'Belmont Cragin': 'medium',
+     'Hegewisch': 'medium',
+     'Clearing': 'medium',
+     'Little Italy, UIC': 'medium',
+     'Mount Greenwood': 'medium',
+     'Ashburn': 'medium',
+     'Beverly': 'medium',
+     'Lincoln Park': 'medium',
+     'Grand Crossing': 'medium',
+     'Archer Heights': 'medium',
+     'West Ridge': 'medium',
+     'East Side': 'medium',
+     'Morgan Park': 'medium',
+     'Irving Park': 'medium',
+     'North Park': 'medium',
+     'Chicago Lawn': 'medium',
+     'Austin': 'medium',
+     'Galewood': 'medium',
+     'Little Village': 'medium',
+     'Washington Heights': 'medium',
+     'Woodlawn': 'medium',
+     'Lincoln Square': 'medium',
+     'Auburn Gresham': 'medium',
+     'Ukrainian Village': 'medium',
+     'Burnside': 'medium',
+     'Avondale': 'medium',
+     'Englewood': 'medium',
+     'Edgewater': 'medium',
+     'Grand Boulevard': 'low',
+     'South Chicago': 'low',
+     'North Lawndale': 'low',
+     'Chatham': 'low',
+     'Wicker Park': 'low',
+     'Avalon Park': 'low',
+     'Garfield Ridge': 'low',
+     'South Shore': 'low',
+     'Riverdale': 'low',
+     'West Town': 'low',
+     'Roseland': 'low',
+     'Lake View': 'low',
+     'Pullman': 'low',
+     'Gage Park': 'low',
+     'Montclare': 'low',
+     'Mckinley Park': 'low',
+     'Loop': 'low',
+     'Rogers Park': 'none',
+     'Bridgeport': 'none',
+     'Hyde Park': 'none',
+     'Garfield Park': 'none',
+     'Streeterville': 'none',
+     'Washington Park': 'none',
+     'Lower West Side': 'none',
+     'Logan Square': 'none',
+     'Printers Row': 'none'}
+
+    df['neighborhood_infection_category'] = df['neighborhood'].map(d)
+
+    return df
+
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 def master_clean(df, parkdf, weatherdf, nbhood = True):
     """
@@ -222832,6 +222904,8 @@ def master_clean(df, parkdf, weatherdf, nbhood = True):
     weather_to_join = weatherdf[['dtDate','Daylight','avg_Tavg', 'avg_PrecipTotal', 'avg_AvgSpeed', 'TimeLaggedDaylight', 'TimeLaggedTemperature','TimeLaggedPrecipitation','TimeLaggedWindspeed' ]]
 
     df = pd.merge(df, weather_to_join, how = 'left', on = 'dtDate', sort = False)
+
+    df = add_neighborhood_infection_column(df)
 
     df = fix_column_names(df)
 
