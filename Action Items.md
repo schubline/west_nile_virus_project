@@ -8,7 +8,7 @@
 ### GitHub Repo
  * Create a GitHub repository for the group. Each member should be added as a contributor.  (DONE)
  * Retrieve the dataset and upload it into a directory named assets.  (DONE, but may want a cleaner dir structure)
- * Generate a .py or .ipynb file that imports the available data.  (JW)
+ * Generate a .py or .ipynb file that imports the available data.  (JW: DONE)
 
 ### Project Planning
  * Define your deliverable - what is the end result?  (DONE?)
@@ -24,17 +24,18 @@
 ### Modeling
  * The goal is of course to build a model and make predictions that the city of Chicago can use when it decides where to spray pesticides! Your team should have a clean Jupyter Notebook that shows your EDA process, your modeling and predictions.
    * Individual notebooks (SL; JT; JW)
-   * Ensemble notebook (JT)
+   * Ensemble notebook (JT -- DONE; no ensembling for final product)
+   * A final model notebook with SVM (JT)
  * Conduct a cost-benefit analysis. This should include annual cost projections for various levels of pesticide coverage (cost) and the effect of these various levels of pesticide coverage (benefit). (Hint: How would we quantify the benefit of pesticide spraying? To get "maximum benefit," what does that look like and how much does that cost? What if we cover less and therefore get a lower level of benefit?)
    * Get cost of disease per patient (JT -- DONE.  It's approx 25k$ per hospitalization)
    * Get municipal cost of spraying (SL)
-   * Just see if neighborhoods that got sprayed had lower (WNV * num_mosquitoes) afterward (JT)
+   * Just see if neighborhoods that got sprayed had lower (WNV * num_mosquitoes) afterward (JT -- closed/abandoned)
  * Your final submission CSV should be in your GitHub repo. (JT)
  * Finalize code for cleaned predictor matrix by Tuesday morning. I think this will take the form of a *.py file
- which contains functions.  Each function adds a column to the dataframe, or joins dataframes.  At the end of the file, all the functions run in sequence.  Then the output is sent to a csv, and everybody's notebooks can just read in that csv, with however many columns it ends up being.  Whoever compiles all this will have to resolve duplicate column names if they arise. (JW?)
- * Everybody test their models by Wed. morning, push final notebooks to repo (SL, JT, JW)
- * Run ensemble code by Thursday morning, push notebook to repo. (JT)
- * Try to measure effect of spraying by Wed. morning (JT)
+ which contains functions.  Each function adds a column to the dataframe, or joins dataframes.  At the end of the file, all the functions run in sequence.  Then the output is sent to a csv, and everybody's notebooks can just read in that csv, with however many columns it ends up being.  Whoever compiles all this will have to resolve duplicate column names if they arise. (JW -- DONE)
+ * Everybody test their models by Wed. morning, push final notebooks to repo (SL, JT, JW -- DONE)
+ * Run final code by Thursday morning, push notebook to repo. (JT)
+ * Try to measure effect of spraying by Wed. morning (JT -- abandoned)
 
 ### Presentation
  * Audience: You are presenting to members of the CDC. Some members of the audience will be biostatisticians and epidemiologists who will understand your models and metrics and will want more information. Others will be decision-makers, focusing almost exclusively on your cost-benefit analysis. Your job is to convince both groups of the best course of action in the same meeting and be able to answer questions that either group may ask.
