@@ -395,9 +395,18 @@ def make_avg_weather_columns(df):
 
     new_df = clean_data(df.copy())
 
-    new_df['avg_Tavg'] = new_df.groupby('Date').Tavg.mean()
-    new_df['avg_PrecipTotal'] = new_df.groupby('Date').PrecipTotal.mean()
-    new_df['avg_AvgSpeed'] = new_df.groupby('Date').AvgSpeed.mean()
+
+    # new_df['avg_Tavg'] = new_df.groupby(by ='Date').Tavg.mean()
+    # new_df['avg_PrecipTotal'] = new_df.groupby(by = 'Date').PrecipTotal.mean()
+    # new_df['avg_AvgSpeed'] = new_df.groupby(by = 'Date').AvgSpeed.mean()
+    avg_Tavg_dict = dict(new_df.groupby(by ='Date').Tavg.mean())
+    avg_PrecipTotal_dict = dict(new_df.groupby(by ='Date').PrecipTotal.mean())
+    avg_AvgSpeed_dict = dict(new_df.groupby(by ='Date').AvgSpeed.mean())
+
+    new_df['avg_Tavg'] = new_df['Date'].map(avg_Tavg_dict)
+    new_df['avg_PrecipTotal'] = new_df['Date'].map(avg_PrecipTotal_dict)
+    new_df['avg_AvgSpeed'] = new_df['Date'].map(avg_AvgSpeed_dict)
+
     return new_df
 
 
