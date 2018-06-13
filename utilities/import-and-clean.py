@@ -2,11 +2,11 @@
 """
 Created on Monday June 11, 2018
 
-@author: Jon
+@author: Jon, James, Schubert
 """
 ## Dummies for neighborhood, species (pip-rest, pip, rest, other)
 ## Neighborhood maker
-## park distance (1/r)
+## park distance (area/distance)
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 import numpy as np
@@ -46,7 +46,13 @@ def dummy_neighborhood(df):
     # assert df["neighborhood"].isnull().sum() == 0
 
     ## make dummies from the Species_modfied column
-    df = pd.get_dummies(df, columns = ['neighborhood'], drop_first = True)
+    flag = False
+    if len(df['neighborhood'].unique()) == 65:
+        flag = True
+    df = pd.get_dummies(df, columns = ['neighborhood'])
+    if flag:
+        df['neighborhood_Hermosa'] = 0
+        df['neighborhood_West Pullman'] = 0
 
     return df
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -301,8 +307,111 @@ def make_timelagged_windspeed_col(df):
     new_df['TimeLaggedWindspeed'] = df['dtDate'].map(lambda row: timelagged_windspeed(df,row))
     return new_df
 
+def clean_data(weather):
+    '''
+    Function that cleans the weather data by removing unwanted columns,
+    and imputing missing values
+    Parameter: weather dataframe
+    Returns: cleaned weather dataframe
+    '''
 
-def add_five_Truslow_cols(df):
+    # filling out the missing Tavg
+    weather.loc[weather["Tavg"] == 'M', 'Tavg'] = round((weather["Tmax"] + weather["Tmin"])/2)
+
+    # imputing missing values for WetBulb
+    ff_missing = [848, 2410, 2412]
+    weather.iloc[ff_missing, weather.columns.get_loc('WetBulb')] = np.nan
+    weather.fillna(method='ffill', inplace=True)
+
+    weather.iloc[2415, weather.columns.get_loc('WetBulb')] = np.nan
+    ffinv = lambda s: s.mask(s == s.shift())
+    weather.assign(WetBulb=ffinv(weather["WetBulb"]))
+
+    # Filling missing sunset and getting right dtype
+    weather.loc[weather["Sunrise"] == '-', 'Sunrise'] = np.nan
+    weather.loc[weather["Sunset"] == '-', 'Sunset'] = np.nan
+    weather.fillna(method='ffill', inplace=True)
+    weather[['Sunrise','Sunset']] = weather[['Sunrise','Sunset']].apply(pd.to_numeric)
+
+    # Creating daylight, Let there be light!
+    weather["Daylight"] = weather["Sunset"] - weather["Sunrise"]
+    weather["Daylight"] = weather["Daylight"].astype(str).str[:-2].astype(np.int64)
+
+    #droppin Sunrise and sunset as no longer needed
+    weather.drop(['Sunrise', 'Sunset'], axis=1, inplace=True)
+
+    #dropping other columns I dont intend to use for further imputation or analysis
+    weather.drop(['SnowFall', 'Water1', 'Depth', 'CodeSum'], axis=1, inplace=True)
+
+    # converting Trace amounts to 0.005 and M as 0.00
+    weather.loc[weather["PrecipTotal"] == '  T', 'PrecipTotal'] = 0.005
+    weather.loc[weather["PrecipTotal"] == 'M', 'PrecipTotal'] = 0.00
+    weather["PrecipTotal"] = weather["PrecipTotal"].astype(float)
+
+    # Imputing missing SeaLevel values
+    ff_missing = [832, 994, 1732, 1756, 2090]
+    weather.iloc[ff_missing, weather.columns.get_loc('SeaLevel')] = np.nan
+    weather.fillna(method='ffill', inplace=True)
+
+    bf_missing = [87, 1745, 2067, 2743]
+    weather.iloc[bf_missing, weather.columns.get_loc('SeaLevel')] = np.nan
+    ffinv = lambda s: s.mask(s == s.shift())
+    weather.assign(SeaLevel=ffinv(weather["SeaLevel"]))
+
+    # Imputing missing Heat and Cool values
+    weather.loc[weather["AvgSpeed"] == 'M', 'AvgSpeed'] = np.nan
+    weather.loc[weather["Heat"] == 'M', 'Heat'] = np.nan
+    weather.loc[weather["Cool"] == 'M', 'Cool'] = np.nan
+    ffinv = lambda s: s.mask(s == s.shift())
+    weather.assign(AvgSpeed=ffinv(weather["AvgSpeed"]))
+    weather.fillna(method='ffill', inplace=True)
+
+    weather["dtDate"] = pd.to_datetime(weather["Date"])
+    # cols = weather.columns.drop("Date")
+    # cols = weather.columns.drop("Depart")
+    # cols = weather.columns.drop("StnPressure")
+    # weather[cols] = weather[cols].apply(pd.to_numeric)
+    weather.drop(['Depart','StnPressure'], axis = 1, inplace = True)
+    weather['Tavg'] = weather['Tavg'].astype(float)
+    weather['PrecipTotal'] = weather['PrecipTotal'].astype(float)
+    weather['AvgSpeed'] = weather['AvgSpeed'].astype(float)
+
+    return weather
+
+def make_avg_weather_columns(df):
+    """ Calculates average meterological data on a given date.  Average of both
+    weather stations
+
+    Parameters
+    ----------
+    df: dataframe with weather info.  I hope there is date info as datetime objects
+
+
+    Returns
+    -------
+    new_df: copy of 'df' with new columns added
+
+    """
+
+    new_df = clean_data(df.copy())
+
+
+    # new_df['avg_Tavg'] = new_df.groupby(by ='Date').Tavg.mean()
+    # new_df['avg_PrecipTotal'] = new_df.groupby(by = 'Date').PrecipTotal.mean()
+    # new_df['avg_AvgSpeed'] = new_df.groupby(by = 'Date').AvgSpeed.mean()
+    avg_Tavg_dict = dict(new_df.groupby(by ='Date').Tavg.mean())
+    avg_PrecipTotal_dict = dict(new_df.groupby(by ='Date').PrecipTotal.mean())
+    avg_AvgSpeed_dict = dict(new_df.groupby(by ='Date').AvgSpeed.mean())
+
+    new_df['avg_Tavg'] = new_df['Date'].map(avg_Tavg_dict)
+    new_df['avg_PrecipTotal'] = new_df['Date'].map(avg_PrecipTotal_dict)
+    new_df['avg_AvgSpeed'] = new_df['Date'].map(avg_AvgSpeed_dict)
+
+    return new_df
+
+
+
+def add_six_Truslow_cols(df):
     """Calls a sequence of functions to add five engineered-feature columns to a dataframe.
     Input dataframe must include the original columns from the 'weather.csv' dataset, or
     at least a cleaned version with the same column titles, and with all numeric data.
@@ -316,6 +425,8 @@ def add_five_Truslow_cols(df):
     """
 
     new_df = make_datetimeobject_col(df)
+
+    new_df = make_avg_weather_columns(new_df)
 
     new_df = make_timelagged_daylight_col(new_df)
 
@@ -222695,10 +222806,17 @@ def make_neighborhood_column(df):
     return df
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-def master_clean(df, parkdf, nbhood = True):
+def master_clean(df, parkdf, weatherdf, nbhood = True):
+    """
+    Combines functions to make neighborhood column (optional), dummy species,
+    dummy neighborhood, make score column, add columns for time-delayed weather,
+    and fix the column names
+    """
     ## Don't bother adding the neighborhood column if it's already there
     if nbhood == False:
         df = make_neighborhood_column(df)
+
+    df = make_datetimeobject_col(df)
 
     df = dummy_species(df)
 
@@ -222706,10 +222824,19 @@ def master_clean(df, parkdf, nbhood = True):
 
     df = make_score_column(df, parkdf)
 
-    # df = add_five_Truslow_cols(df)
+    weatherdf = add_six_Truslow_cols(weatherdf)
+
+    print("####################")
+    print(weatherdf.columns)
+
+    weather_to_join = weatherdf[['dtDate','Daylight','avg_Tavg', 'avg_PrecipTotal', 'avg_AvgSpeed', 'TimeLaggedDaylight', 'TimeLaggedTemperature','TimeLaggedPrecipitation','TimeLaggedWindspeed' ]]
+
+    df = pd.merge(df, weather_to_join, how = 'left', on = 'dtDate', sort = False)
 
     df = fix_column_names(df)
+
     print(list(df.columns))
+
     return df
 
 
@@ -222717,8 +222844,14 @@ def master_clean(df, parkdf, nbhood = True):
 
 train = pd.read_csv('../assets/train_with_neighborhoods.csv', index_col = 0)
 test = pd.read_csv('../assets/test_with_neighborhoods.csv', index_col = 0)
-train_mini = train.head(100)
-test_mini = test.head(100)
-park = pd.read_csv('../modified_parks.csv')
-master_clean(train_mini, park).to_csv('attempt_master_clean_train.csv', index = False)
-master_clean(test_mini, park).to_csv('attempt_master_clean_test.csv', index = False)
+park = pd.read_csv('../modified_parks.csv', index_col = 0)
+weather = pd.read_csv('../assets/input/weather.csv')
+
+# train_mini = train.head(100)
+# test_mini = test.head(100)
+#
+# master_clean(train_mini, park, weather).to_csv('mini_master_clean_train.csv', index = False)
+# master_clean(test_mini, park, weather).to_csv('mini_master_clean_test.csv', index = False)
+
+master_clean(train, park, weather).to_csv('../assets/master_clean_train.csv', index = False)
+master_clean(test, park, weather).to_csv('../assets/master_clean_test.csv', index = False)
