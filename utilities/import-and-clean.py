@@ -222914,6 +222914,8 @@ def master_clean(df, parkdf, weatherdf, nbhood = True):
 
     df = fix_column_names(df)
 
+    df = df.drop_duplicates()
+    
     print(list(df.columns))
 
     return df
