@@ -48,6 +48,16 @@ def clean_data(weather):
     weather.loc[weather["PrecipTotal"] == 'M', 'PrecipTotal'] = 0.00
     weather["PrecipTotal"] = weather["PrecipTotal"].astype(float)
 
+    # Imputing StnPressure
+    ff_missing = [848, 2410]
+    weather.iloc[ff_missing, weather.columns.get_loc('StnPressure')] = np.nan
+    weather.fillna(method='ffill', inplace=True)
+
+    bf_missing = [87, 2411]
+    weather.iloc[bf_missing, weather.columns.get_loc('StnPressure')] = np.nan
+    ffinv = lambda s: s.mask(s == s.shift())
+    weather.assign(StnPressure=ffinv(weather["StnPressure"]))
+
     # Imputing missing SeaLevel values
     ff_missing = [832, 994, 1732, 1756, 2090]
     weather.iloc[ff_missing, weather.columns.get_loc('SeaLevel')] = np.nan
