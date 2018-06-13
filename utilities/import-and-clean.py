@@ -222915,7 +222915,7 @@ def master_clean(df, parkdf, weatherdf, nbhood = True):
     df = fix_column_names(df)
 
     df = df.drop_duplicates()
-    
+
     print(list(df.columns))
 
     return df
@@ -222928,11 +222928,11 @@ test = pd.read_csv('../assets/test_with_neighborhoods.csv', index_col = 0)
 park = pd.read_csv('../modified_parks.csv', index_col = 0)
 weather = pd.read_csv('../assets/input/weather.csv')
 
-train_mini = train.head(100)
-test_mini = test.head(100)
+# train_mini = train.head(100)
+# test_mini = test.head(100)
+#
+# master_clean(train_mini, park, weather).to_csv('mini_master_clean_train.csv', index = False)
+# master_clean(test_mini, park, weather).to_csv('mini_master_clean_test.csv', index = False)
 
-master_clean(train_mini, park, weather).to_csv('mini_master_clean_train.csv', index = False)
-master_clean(test_mini, park, weather).to_csv('mini_master_clean_test.csv', index = False)
-
-# master_clean(train, park, weather).to_csv('../assets/master_clean_train.csv', index = False)
-# master_clean(test, park, weather).to_csv('../assets/master_clean_test.csv', index = False)
+master_clean(train, park, weather).to_csv('../assets/master_clean_train.csv', index = False)
+master_clean(test, park, weather).to_csv('../assets/master_clean_test.csv', index = False)
