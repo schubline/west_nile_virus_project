@@ -1,0 +1,42 @@
+2018-06-13-22-50-56:
+	SVM
+	rbf	
+	C = 300
+	gamma = 1
+	totally balanced classes
+	kaggle ROCAUC = 0.51
+
+2018-06-13-23-46-07:
+	SVM
+	rbf
+	C = 300
+	gamma = 1
+	totally balanced classes
+	
+
+2018-06-14-10-24-16:
+	SVM
+	rbf
+	C = 1
+	gamma = 1
+	totally balanced classes
+	kaggle ROCAUC = 0.54
+
+2018-06-14-10-50-53:
+	SVM
+	rbf
+	C = 1
+	gamma = 1
+	no class balancing
+	kaggle ROCAUC = 0.54
+
+
+2018-06-14-11-06-01:
+	default logreg
+	no class balancing
+	kaggle ROCAUC = 0.72
+
+2018-06-14-13-26-17:
+	logreg
+	penalty='l1',class_weight=None, tol=1e-4, C=1
+	kaggle ROCAUC = 0.72
