@@ -3,7 +3,7 @@
 
 ## Model notebooks
 
-JGT_model_5.ipynb:  Final logistic-regression model with some anlysis of cost-benefit
+JGT_model_5.ipynb:  Final logistic-regression model with some anlysis of cost-benefit  
 JGT_model_4.ipynb:  Penultimate logistic-regression models
 JGT_model_3.ipynb:  Support-vector-machine models, which overfit
 JGT_models_2.ipynb:  AdaBoost and RandomForest, never optimized
