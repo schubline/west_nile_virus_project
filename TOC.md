@@ -13,7 +13,7 @@ JGT_models.ipynb:  AdaBoost and RandomForest, never optimized
 ## EDA notebooks
 
 JGT_EDA.ipynb:  EDA on weather data, some feature engineering  
-
+EDA-train-test-JW.ipynb: EDA on training and test data, some feature engineering and modeling
 
 ## Utility scripts
 
@@ -44,3 +44,4 @@ Roles.md:  Documents division of labor among team members, roughly.
 
 assets/input/*.*: files from Kaggle  
 assets/src/*.*: files from Kaggle  
+assets/visualizations/*.*: visualizations generated from EDA and external sources  
