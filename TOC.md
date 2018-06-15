@@ -15,7 +15,7 @@ JGT_models.ipynb:  AdaBoost and RandomForest, never optimized
 JGT_EDA.ipynb:  EDA on weather data, some feature engineering  
 EDA-train-test-JW.ipynb: EDA on training and test data, some feature engineering and modeling
 
-* additional material found at https://public.tableau.com/profile/jon.withers#!/vizhome/chicagownv/Sheet8 *
+** additional material found at https://public.tableau.com/profile/jon.withers#!/vizhome/chicagownv/Sheet8 **
 
 ## Utility scripts
 
