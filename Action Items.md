@@ -25,7 +25,7 @@
  * The goal is of course to build a model and make predictions that the city of Chicago can use when it decides where to spray pesticides! Your team should have a clean Jupyter Notebook that shows your EDA process, your modeling and predictions.
    * Individual notebooks (SL; JT; JW)
    * Ensemble notebook (JT -- DONE; no ensembling for final product)
-   * A final model notebook with SVM (JT)
+   * A final model notebook  (JT  DONE)
  * Conduct a cost-benefit analysis. This should include annual cost projections for various levels of pesticide coverage (cost) and the effect of these various levels of pesticide coverage (benefit). (Hint: How would we quantify the benefit of pesticide spraying? To get "maximum benefit," what does that look like and how much does that cost? What if we cover less and therefore get a lower level of benefit?)
    * Get cost of disease per patient (JT -- DONE.  It's approx 25k$ per hospitalization)
    * Get municipal cost of spraying (SL)
@@ -41,7 +41,7 @@
  * Audience: You are presenting to members of the CDC. Some members of the audience will be biostatisticians and epidemiologists who will understand your models and metrics and will want more information. Others will be decision-makers, focusing almost exclusively on your cost-benefit analysis. Your job is to convince both groups of the best course of action in the same meeting and be able to answer questions that either group may ask.
  * The length of your presentation should be about 20 minutes (a rough guideline: 2 minute intro, 10 minutes on model, 5 minutes on cost-benefit analysis, 3 minute recommendations/conclusion). Touch base with your local instructor... er, manager... for specific logistic requirements!
    * Intro + conclusions (JW)
-   * Modeling (JT)
+   * Modeling (JT-- DONE)
    * Cost-benefit (SL)
  * Outline for presentation segments due to editor Thu afternoon (everyone)
  * Editor finalizes presentation Thu. night. (JW)
