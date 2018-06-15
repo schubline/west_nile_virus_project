@@ -17,6 +17,7 @@ EDA-train-test-JW.ipynb: EDA on training and test data, some feature engineering
 
 ## Utility scripts
 
+utilities/import-and-clean.py: Contains functions to input and prepare data, including all features used in models. When executed, reproduces the training and test data used in model notebooks.  
 utilities/ensemble.py:  Contains functions to put three classifiers together in an sklearn VotingClassifier and gridsearch over weights  
 utilities/lat_lon_ds.py:  Contains functions to find distance between two (lat, lon) coordinates, tuned for the Chicago area  
 utilities/JGT_engineered_features.py:  Functions to create engineered features based on weather data  
