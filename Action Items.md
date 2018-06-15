@@ -31,10 +31,10 @@
    * Get municipal cost of spraying (SL)
    * Just see if neighborhoods that got sprayed had lower (WNV * num_mosquitoes) afterward (JT -- closed/abandoned)
  * Your final submission CSV should be in your GitHub repo. (JT)
- * Finalize code for cleaned predictor matrix by Tuesday morning. I think this will take the form of a *.py file
+ * Finalize code for cleaned predictor matrix by Tuesday morning. I think this will take the form of a .py file
  which contains functions.  Each function adds a column to the dataframe, or joins dataframes.  At the end of the file, all the functions run in sequence.  Then the output is sent to a csv, and everybody's notebooks can just read in that csv, with however many columns it ends up being.  Whoever compiles all this will have to resolve duplicate column names if they arise. (JW -- DONE)
  * Everybody test their models by Wed. morning, push final notebooks to repo (SL, JT, JW -- DONE)
- * Run final code by Thursday morning, push notebook to repo. (JT)
+ * Run final code by Thursday morning, push notebook to repo. (JT -- DONE, notebook #5)
  * Try to measure effect of spraying by Wed. morning (JT -- abandoned)
 
 ### Presentation
