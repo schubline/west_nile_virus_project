@@ -1,4 +1,5 @@
-# West Nile Virus: Modeling Infections in Chicago
+# West Nile Virus: Modeling Infections in Chicago  
+[Presentation](https://prezi.com/view/dLiMSDKIuVMUKMuWyY8O/)
 
 ## Authors
 Jon Withers - TL  
