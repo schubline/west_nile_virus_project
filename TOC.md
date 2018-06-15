@@ -47,3 +47,7 @@
 * assets/input/*.*: files from Kaggle  
 * assets/src/*.*: files from Kaggle  
 * assets/visualizations/*.*: visualizations generated from EDA and external sources  
+
+## External resources
+
+* https://public.tableau.com/profile/jon.withers#!/vizhome/chicagownv/Sheet8
