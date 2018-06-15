@@ -36,7 +36,16 @@
 	no class balancing
 	kaggle ROCAUC = 0.72
 
+
 2018-06-14-13-26-17:
 	logreg
+	reduced feature set
 	penalty='l1',class_weight=None, tol=1e-4, C=1
 	kaggle ROCAUC = 0.72
+
+
+2018-06-14-17-35-46:
+	logreg
+	only engineered weather features
+	penalty='l1',class_weight=None, tol=1e-4, C=1
+	kaggle ROCAUC = 0.70
