@@ -14,6 +14,7 @@
 
 * JGT_EDA.ipynb:  EDA on weather data, some feature engineering  
 * EDA-train-test-JW.ipynb: EDA on training and test data, some feature engineering and modeling
+* SL_weather_EDA_1.ipynb: EDA and preprocessing on the weather data 
 
 ## Utility scripts
 
