@@ -1,0 +1,304 @@
+{
+  "version": "v1",
+  "config": {
+    "visState": {
+      "filters": [
+        {
+          "dataId": "3qeqg0dae",
+          "id": "sk5tq2hj",
+          "name": "NumMosquitos",
+          "type": "range",
+          "value": [
+            1.2,
+            50
+          ],
+          "enlarged": false,
+          "plotType": "histogram",
+          "yAxis": null
+        },
+        {
+          "dataId": "e74g0glz",
+          "id": "h68r8m6f",
+          "name": "Time",
+          "type": "timeRange",
+          "value": [
+            1529045818000,
+            1529065441000
+          ],
+          "enlarged": true,
+          "plotType": "histogram",
+          "yAxis": null
+        },
+        {
+          "dataId": "238gytgpg",
+          "id": "hr3w8ifhh",
+          "name": "Date",
+          "type": "multiSelect",
+          "value": [
+            "7/17/2013"
+          ],
+          "enlarged": false,
+          "plotType": "histogram",
+          "yAxis": null
+        }
+      ],
+      "layers": [
+        {
+          "id": "cwthfkz",
+          "type": "point",
+          "config": {
+            "dataId": "5yt22jsc",
+            "label": "Point",
+            "color": [
+              248,
+              149,
+              112
+            ],
+            "columns": {
+              "lat": "latitude",
+              "lng": "longitude",
+              "altitude": null
+            },
+            "isVisible": false,
+            "visConfig": {
+              "radius": 10,
+              "fixedRadius": false,
+              "opacity": 0.8,
+              "outline": false,
+              "thickness": 2,
+              "colorRange": {
+                "name": "Global Warming",
+                "type": "sequential",
+                "category": "Uber",
+                "colors": [
+                  "#5A1846",
+                  "#900C3F",
+                  "#C70039",
+                  "#E3611C",
+                  "#F1920E",
+                  "#FFC300"
+                ]
+              },
+              "radiusRange": [
+                0,
+                50
+              ],
+              "hi-precision": false
+            }
+          },
+          "visualChannels": {
+            "colorField": null,
+            "colorScale": "quantile",
+            "sizeField": null,
+            "sizeScale": "linear"
+          }
+        },
+        {
+          "id": "jdnh4lp",
+          "type": "point",
+          "config": {
+            "dataId": "e74g0glz",
+            "label": "Point",
+            "color": [
+              19,
+              164,
+              171
+            ],
+            "columns": {
+              "lat": "Latitude",
+              "lng": "Longitude",
+              "altitude": null
+            },
+            "isVisible": true,
+            "visConfig": {
+              "radius": 10,
+              "fixedRadius": false,
+              "opacity": 0.6,
+              "outline": false,
+              "thickness": 2,
+              "colorRange": {
+                "name": "Global Warming",
+                "type": "sequential",
+                "category": "Uber",
+                "colors": [
+                  "#5A1846",
+                  "#900C3F",
+                  "#C70039",
+                  "#E3611C",
+                  "#F1920E",
+                  "#FFC300"
+                ]
+              },
+              "radiusRange": [
+                0,
+                50
+              ],
+              "hi-precision": true
+            }
+          },
+          "visualChannels": {
+            "colorField": null,
+            "colorScale": "quantile",
+            "sizeField": null,
+            "sizeScale": "linear"
+          }
+        },
+        {
+          "id": "nm0osow",
+          "type": "point",
+          "config": {
+            "dataId": "3qeqg0dae",
+            "label": "Point",
+            "color": [
+              246,
+              218,
+              0
+            ],
+            "columns": {
+              "lat": "Latitude",
+              "lng": "Longitude",
+              "altitude": null
+            },
+            "isVisible": true,
+            "visConfig": {
+              "radius": 20.1,
+              "fixedRadius": false,
+              "opacity": 0.78,
+              "outline": false,
+              "thickness": 2,
+              "colorRange": {
+                "name": "UberPool 6",
+                "type": "diverging",
+                "category": "Uber",
+                "colors": [
+                  "#F9E200",
+                  "#E6470A",
+                  "#D31256",
+                  "#C019BD",
+                  "#551EAD",
+                  "#213E9A"
+                ],
+                "reversed": true
+              },
+              "radiusRange": [
+                0,
+                45.8
+              ],
+              "hi-precision": false
+            }
+          },
+          "visualChannels": {
+            "colorField": {
+              "name": "WnvPresent",
+              "type": "boolean"
+            },
+            "colorScale": "ordinal",
+            "sizeField": null,
+            "sizeScale": "linear"
+          }
+        },
+        {
+          "id": "f9y5juc",
+          "type": "heatmap",
+          "config": {
+            "dataId": "5yt22jsc",
+            "label": "new layer",
+            "color": [
+              179,
+              173,
+              158
+            ],
+            "columns": {
+              "lat": "latitude",
+              "lng": "longitude"
+            },
+            "isVisible": false,
+            "visConfig": {
+              "opacity": 0.8,
+              "colorRange": {
+                "name": "Global Warming",
+                "type": "sequential",
+                "category": "Uber",
+                "colors": [
+                  "#5A1846",
+                  "#900C3F",
+                  "#C70039",
+                  "#E3611C",
+                  "#F1920E",
+                  "#FFC300"
+                ]
+              },
+              "radius": 25.9
+            }
+          },
+          "visualChannels": {
+            "weightField": {
+              "name": "timelaggedprecipitation",
+              "type": "real"
+            },
+            "weightScale": "linear"
+          }
+        }
+      ],
+      "interactionConfig": {
+        "tooltip": {
+          "fieldsToShow": {
+            "3qeqg0dae": [
+              "Date",
+              "Address",
+              "Species",
+              "Block",
+              "Street"
+            ],
+            "e74g0glz": [
+              "Date",
+              "Time",
+              "Latitude",
+              "Longitude"
+            ],
+            "5yt22jsc": [
+              "date",
+              "address",
+              "block",
+              "street",
+              "trap"
+            ],
+            "238gytgpg": [
+              "Date",
+              "neighborhood"
+            ]
+          },
+          "enabled": true
+        },
+        "brush": {
+          "size": 0.5,
+          "enabled": false
+        }
+      },
+      "layerBlending": "normal",
+      "splitMaps": []
+    },
+    "mapState": {
+      "bearing": 6,
+      "dragRotate": true,
+      "latitude": 41.71394479915314,
+      "longitude": -87.73258024534327,
+      "pitch": 58.435853653505795,
+      "zoom": 12.240327380036824,
+      "isSplit": false
+    },
+    "mapStyle": {
+      "styleType": "dark",
+      "topLayerGroups": {},
+      "visibleLayerGroups": {
+        "label": true,
+        "road": true,
+        "border": false,
+        "building": true,
+        "water": true,
+        "land": true
+      },
+      "mapStyles": {}
+    }
+  }
+}
